@@ -1,4 +1,4 @@
-module example/web-service-gin
+module satoshi-lottery
 
 go 1.20
 
