@@ -23,6 +23,13 @@ GET /v1/bitcoin - get a random bitcoin private key
 GET /v1/bitcoin/:private-key - get the balance in satoshis for a private key and the public address
 ```
 
+### 🐋 Deploy using Docker
+
+```sh
+docker build . -t satoshi-lottery
+docker run -p 8080:8080 satoshi-lottery
+```
+
 ## ⭐️ Show your support
 
 Please ⭐️ this repository if this project helped you!
