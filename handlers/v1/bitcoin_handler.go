@@ -2,11 +2,15 @@ package bitcoin_handler
 
 import (
 	"github.com/gin-gonic/gin"
+
+	bitcoin_service "satoshi-lottery/services"
 )
 
 
-func GenerateRandomBitCoinPrivateKey(c *gin.Context) {
+func GetRandomBitCoinPrivateKey(c *gin.Context) {
+  privateKey :=  bitcoin_service.GenerateRandomBitCoinPrivateKey()
+
   c.JSON(200, gin.H{
-    "message": "pong",
+    "private-key": privateKey,
   })
 }
