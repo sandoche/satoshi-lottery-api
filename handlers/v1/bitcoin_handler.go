@@ -17,8 +17,23 @@ func GetRandomBitCoinPrivateKey(c *gin.Context) {
 
 func GetAddressAndBalanceFromPrivateKey(c *gin.Context) {
   privateKey := c.Params.ByName("private-key")
-  address := bitcoin_service.GetAddressFromPrivateKey(privateKey)
-  balance, _ := bitcoin_service.GetBalanceFromAddress(address)
+  
+  address, err := bitcoin_service.GetAddressFromPrivateKey(privateKey)
+  if err != nil {
+    c.JSON(500, gin.H{
+      "error": err.Error(),
+    })
+    return
+  }
+
+  balance, err := bitcoin_service.GetBalanceFromAddress(address)
+
+  if err != nil {
+    c.JSON(500, gin.H{
+      "error": err.Error(),
+    })
+    return
+  }
 
   c.JSON(200, gin.H{
     "private-key": privateKey,

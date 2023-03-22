@@ -31,12 +31,20 @@ func GenerateRandomBitCoinPrivateKey() string {
 	return hex.EncodeToString(privateKey)
 }
 
-func GetAddressFromPrivateKey(privateKeyString string) string {
-	decodedPrivateKey, _ := hex.DecodeString(privateKeyString)
+func GetAddressFromPrivateKey(privateKeyString string) (string, error) {
+	decodedPrivateKey, err := hex.DecodeString(privateKeyString)
+	if err != nil {
+		return "", err
+	}
+
 	privateKey, _ := btcec.PrivKeyFromBytes(decodedPrivateKey)
 	publicKey := privateKey.PubKey().SerializeCompressed()
-	address, _ := btcutil.NewAddressPubKey(publicKey, &chaincfg.MainNetParams)
-	return address.EncodeAddress()
+	address, err := btcutil.NewAddressPubKey(publicKey, &chaincfg.MainNetParams)
+	if err != nil {
+		return "", err
+	}
+
+	return address.EncodeAddress(), nil
 }
 
 func GetBalanceFromAddress(address string) (int, error) {
